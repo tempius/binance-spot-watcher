@@ -57,7 +57,7 @@ def textColorizer(text: str) -> str:
         .replace("ACCU", f"{_bcolors.GREEN}ACCU{_bcolors.END}")
 
 
-def tableCellFormat(cell: typing.Union[str, typing.Dict], colWidth: int) -> str:
+def tableCellFormat(cell: typing.Union[str, typing.Dict[str, str]], colWidth: int) -> str:
     if isinstance(cell, str):
 
         return textColorizer(cell.ljust(colWidth))
