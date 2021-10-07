@@ -24,4 +24,4 @@ def stopIntervals() -> None:
 
 async def update() -> None:
     await _prices.updateSymbols()
-    await _table.updateTable()
+    await _table.updateRows()
