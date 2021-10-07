@@ -6,7 +6,7 @@ import _table
 SET_INTERVAL = []
 
 
-def setInterval(func, sec):
+def setInterval(func: callable, sec: int) -> None:
     def funcWrapper():
         timer.cancel()
         SET_INTERVAL.remove(timer)
@@ -16,10 +16,12 @@ def setInterval(func, sec):
     timer.start()
     SET_INTERVAL.append(timer)
 
-def stopIntervals():
+
+def stopIntervals() -> None:
     for timer in SET_INTERVAL:
         timer.cancel()
 
-async def update():
+
+async def update() -> None:
     await _prices.updateSymbols()
     await _table.updateTable()

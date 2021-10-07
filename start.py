@@ -17,14 +17,14 @@ SPOTS_TO_CHECK = [
 ]
 
 
-def start(loop):
-    _prices.initPrices(SPOTS_TO_CHECK)
+def start(loop: asyncio.events.AbstractEventLoop) -> None:
+    _prices.initSymbols(SPOTS_TO_CHECK)
     _utils.setInterval(_utils.update, 1)
     _utils.setInterval(_table.printTable, 1)
     loop.run_until_complete(_websockets.openConnections(SPOTS_TO_CHECK))
 
 
-def stop(loop):
+def stop(loop: asyncio.events.AbstractEventLoop) -> None:
     print(f"\n{_bcolors.CYAN}GRACEFULLY STOPPING, PLEASE WAIT... (press Ctrl+C again to force){_bcolors.END}")
     _utils.stopIntervals()
     try:
@@ -36,8 +36,8 @@ def stop(loop):
 
 
 # Run the script
+loop = asyncio.get_event_loop()
 try:
-    loop = asyncio.get_event_loop()
     start(loop)
 except KeyboardInterrupt:
     stop(loop)
