@@ -1,4 +1,5 @@
 import os
+import typing
 import _bcolors
 import _prices
 import _websockets
@@ -45,7 +46,7 @@ ROW_SEPARATOR = list(map(lambda c: "─".join(
 #     }
 
 
-def textColorizer(text):
+def textColorizer(text: str) -> str:
 
     return text\
         .replace("⇣", f"{_bcolors.FAIL}⇣{_bcolors.END}")\
@@ -56,7 +57,7 @@ def textColorizer(text):
         .replace("ACCU", f"{_bcolors.GREEN}ACCU{_bcolors.END}")
 
 
-def tableCellFormat(cell, colWidth):
+def tableCellFormat(cell: typing.Union[str, typing.Dict], colWidth: int) -> str:
     if isinstance(cell, str):
 
         return textColorizer(cell.ljust(colWidth))
@@ -71,11 +72,11 @@ def tableCellFormat(cell, colWidth):
         return "".ljust(colWidth)
 
 
-def tableRowFormat(row, colWidth=COL_WIDTH):
+def tableRowFormat(row: typing.List[typing.Dict[str, str]], colWidth: int = COL_WIDTH) -> str:
     return f"{'│ '.join(tableCellFormat(cell, colWidth) for cell in row)}\n"
 
 
-async def updateTable():
+async def updateTable() -> None:
     global TABLE
 
     table = tableRowFormat(TABLE_HEADERS)
@@ -288,6 +289,6 @@ async def updateTable():
     TABLE = table
 
 
-async def printTable():
+async def printTable() -> None:
     os.system('cls' if os.name == 'nt' else 'clear')
     print(TABLE, end="")
